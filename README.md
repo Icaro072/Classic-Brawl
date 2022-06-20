@@ -53,7 +53,7 @@ Open source Brawl Stars server emulator for version 29 of the game!
 
 
 ## Configure client
-There's no client. For play, you need to find a client by yourself.
+Client:https://www.mediafire.com/file/qortsa0b0yfyu0i/BrawlStars-v29.apk/file
 
 
 
