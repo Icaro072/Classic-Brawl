@@ -104,7 +104,12 @@ class Shop:
         {
             'Cost': 140,
             'Amount': 1200
-        }
+        },
+
+        {
+            'Cost': 280,
+            'Amount': 2600
+        },
 
     ]
 
@@ -163,4 +168,6 @@ class Shop:
             self.writeString()
             self.writeVint(0)
             self.writeBoolean(False)
+            self.writeVint(2)
+            self.writeVint(0) # % Extra Text
             

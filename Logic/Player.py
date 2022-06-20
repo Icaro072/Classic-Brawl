@@ -2,6 +2,7 @@ import json
 from Utils.Config import Config
 from Utils.Fingerprint import Fingerprint
 from Files.CsvLogic.Characters import Characters
+from Files.CsvLogic.Emotes import Emotes
 from Files.CsvLogic.Skins import Skins
 from Files.CsvLogic.Cards import Cards
 
@@ -35,10 +36,11 @@ class Players:
 	ClientDict = {}
 
 	# Brawler data
-	skins_id = Skins.get_skins_id()
-	brawlers_id = Characters.get_brawlers_id()
-	card_skills_id = Cards.get_spg_id()
-	card_unlock_id = Cards.get_brawler_unlock()
+	skins_id = Skins().get_skins_id()
+	brawlers_id = Characters().get_brawlers_id()
+	emotes_id  = Emotes().get_emotes_id()
+	card_skills_id = Cards().get_spg_id()
+	card_unlock_id = Cards().get_brawler_unlock()
 
 	# General player (Brawler, Currency, etc..)
 	UnlockType = settings['UnlockedBrawlersOption']
@@ -86,7 +88,7 @@ class Players:
 
 	name = "Guest"
 	tutorial = settings['TutorialState']
-	trophy_road = 96
+	trophy_road = 200
 	player_experience = 0
 	collected_experience = 0
 	profile_icon = 0
@@ -111,7 +113,6 @@ class Players:
 	content_creator = settings['SupportedContentCreator']
 	tokenevent = settings['DoubleTokenEvent']
 	coinevent = settings['CoinShowerEvent']
-	maximum_experience = settings['MaximumExperience']
 
 	# Alliances
 	club_high_id = 0
@@ -179,7 +180,9 @@ class Players:
 		'34': brawler_trophies_for_rank,
 		'35': brawler_trophies_for_rank,
 		'36': brawler_trophies_for_rank,
-		'37': brawler_trophies_for_rank
+		'37': brawler_trophies_for_rank,
+		'38': brawler_trophies_for_rank,
+		'39': brawler_trophies_for_rank
 	}
 
 	brawlers_upgradium = {
@@ -220,7 +223,9 @@ class Players:
 		'34': brawler_upgrade_points,
 		'35': brawler_upgrade_points,
 		'36': brawler_upgrade_points,
-		'37': brawler_upgrade_points
+		'37': brawler_upgrade_points,
+		'38': brawler_upgrade_points,
+		'39': brawler_upgrade_points
 	}
 
 	Brawler_level = {
@@ -261,7 +266,9 @@ class Players:
 		'34': brawler_power_level,
 		'35': brawler_power_level,
 		'36': brawler_power_level,
-		'37': brawler_power_level
+		'37': brawler_power_level,
+		'38': brawler_power_level,
+		'39': brawler_power_level
 	}
 
 	Brawler_starPower = {
@@ -302,7 +309,9 @@ class Players:
 		'34': brawler_star_power,
 		'35': brawler_star_power,
 		'36': brawler_star_power,
-		'37': brawler_star_power
+		'37': brawler_star_power,
+		'38': brawler_star_power,
+		'39': brawler_star_power
 	}
 
 	Brawler_newTag = {
@@ -343,7 +352,9 @@ class Players:
 		'34': brawler_new_tag,
 		'35': brawler_new_tag,
 		'36': brawler_new_tag,
-		'37': brawler_new_tag
+		'37': brawler_new_tag,
+		'38': brawler_new_tag,
+		'39': brawler_new_tag
 	}
 
     # Friendly game (Teams, info, result)

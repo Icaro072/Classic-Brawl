@@ -65,12 +65,12 @@ class Boxes:
         },
 
         {
-            'Name': 'UpgradeTokens',
+            'Name': 'StarPower and Gadget',
             'ID': 4,
         },
 
         {
-            'Name': 'StarPower',
+            'Name': 'Unknown',
             'ID': 5,
         },
 
@@ -97,5 +97,10 @@ class Boxes:
         {
             'Name': 'Gems2',
             'ID': 10,
+        },
+
+        {
+            'Name': 'Pins',
+            'ID': 11,
         }
     ]

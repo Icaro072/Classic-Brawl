@@ -29,10 +29,28 @@ class LoginMessage(BSMessageReader):
         self.build = self.read_int()
 
         self.fingerprint_sha = self.read_string()
+        self.DeviceModel = self.read_string()
+        self.IsAndroid = self._read_varint() # im not sure
+        self.Unknown = self._read_varint()   # AJWSDASKD
+        self.DeviceLanguage = self.read_string()
+
+        self.OSVersion = self.read_string()
+
         self.read_int()  # Unknown
+        self.read_Vint() # Unknown
+
+        self.OpenUDID = self.read_string()
+
+        self._read_varint() # WTF
+        self.read_int()
+
+        self.read_int()
+        self.read_Vint()
+
+        self.AppVersion = self.read_string()
 
     def process(self):
-        if self.major != 26:
+        if self.major != 29:
             self.player.err_code = 8
             LoginFailedMessage(self.client, self.player, "Your client is outdated, click below to download the new version!").send()
 

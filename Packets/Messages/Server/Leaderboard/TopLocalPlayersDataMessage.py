@@ -41,6 +41,7 @@ class GetLeaderboardLocalOkMessage(Writer):
             self.writeVint(28000000 + player['profileIcon'])
             self.writeVint(43000000 + player['namecolor'])
             self.writeVint(0)
+            self.writeVint(0) # Unknown
 
 
         self.writeVint(0)

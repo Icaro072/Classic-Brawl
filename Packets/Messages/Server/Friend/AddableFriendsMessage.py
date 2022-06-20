@@ -59,6 +59,7 @@ class AddableFriendsMessage(Writer):
             self.writeString(player['name'])
             self.writeVint(100)
             self.writeVint(28000000 + player["profileIcon"])
-            self.writeVint(43000000 + player["namecolor"])
+            self.writeVint(43000000)
+            self.writeVint(0) # Unknown
 
     

@@ -117,15 +117,15 @@ class BattleResultDuoShowdownMessage(Writer):
                 rank_4_val = -10
                 rank_5_val = -12
         # Result Rewards 
+        if self.player.battle_tokens <= 0 and self.player.collected_experience >= 1000:
+            result = self.player.result + 6
+        elif self.player.battle_tokens <= 0:
+            result = self.player.result + 4
+        elif self.player.collected_experience >= 1000:
+            result = self.player.result + 2
+        else:
+            result = self.player.result
         if self.player.result == 0:
-            if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
-                result = self.player.result + 6
-            elif self.player.battle_tokens <= 0:
-                result = self.player.result + 4
-            elif self.player.collected_experience >= self.player.maximum_experience:
-                result = self.player.result + 2
-            else:
-                result = self.player.result
             gainedtrophies = 0
             if self.player.rank == 1:
                 gainedtokens = practice_token_list[0]
@@ -145,24 +145,6 @@ class BattleResultDuoShowdownMessage(Writer):
                 gainedtokens = practice_token_list[4]
                 gainedexperience = practice_exp_reward[4]
         else:
-            if self.player.rank in [1, 2]:
-                if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
-                    result = self.player.result + 7
-                elif self.player.battle_tokens <= 0:
-                    result = self.player.result + 5
-                elif self.player.collected_experience >= self.player.maximum_experience:
-                    result = self.player.result + 3
-                else:
-                    result = self.player.result + 1
-            else:
-                if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
-                    result = self.player.result + 6
-                elif self.player.battle_tokens <= 0:
-                    result = self.player.result + 4
-                elif self.player.collected_experience >= self.player.maximum_experience:
-                    result = self.player.result + 2
-                else:
-                    result = self.player.result
             if self.player.rank == 1:
                 gainedtokens = token_list[0]
                 gainedexperience = exp_reward[0]
@@ -298,10 +280,7 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeScId(29, self.player.skin_id) # Player Skin
         self.writeVint(brawler_trophies) # Your Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(brawler_level) # Your Brawler Power Level
-        else:
-            self.writeVint(10) # Your Brawler Power Level
+        self.writeVint(brawler_level) # Your Brawler Power Levell
         self.writeBoolean(True) # HighID and LowID Array
         self.writeInt(self.player.high_id) # HighID
         self.writeInt(self.player.low_id) # LowID
@@ -309,6 +288,7 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(self.player.player_experience) # Player Experience Level
         self.writeVint(28000000 + self.player.profile_icon) # Player Profile Icon
         self.writeVint(43000000 + self.player.name_color) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.bot1_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -318,15 +298,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 1 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot1_n) # Bot 1 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.bot2_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -336,15 +314,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 2 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot2_n) # Bot 2 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.bot3_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -354,15 +330,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 3 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot3_n) # Bot 3 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.bot4_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -372,15 +346,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 4 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot4_n) # Bot 4 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.bot5_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -390,15 +362,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 5 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot5_n) # Bot 5 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
         
         if self.player.bot6_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -408,15 +378,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 6 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot6_n) # Bot 6 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.bot7_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -426,15 +394,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 7 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot7_n) # Bot 7 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.bot8_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -444,15 +410,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 8 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot8_n) # Bot 8 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.bot9_team == 0:
             self.writeVint(0) # Team and Star Player Type
@@ -462,15 +426,13 @@ class BattleResultDuoShowdownMessage(Writer):
         self.writeVint(0) # Bot 9 Skin
         self.writeVint(0) # Brawler Trophies
         self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot9_n) # Bot 9 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
         
         # Experience Array
         self.writeVint(2) # Count

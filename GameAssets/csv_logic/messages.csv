@@ -46,3 +46,5 @@
 "msg44","TID_QUICK_MESSAGE_ONE_MOMENT",,,,"sc/ui.sc","button_chat_item",,24,
 "msg45","TID_QUICK_MESSAGE_ASK_STAR_TOKEN_HELP",,"TRUE",,"sc/ui.sc","button_chat_item",,25,
 "msg55","TID_QUICK_MESSAGE_LETS_CHAT",,,7,"sc/ui.sc","button_chat_item",,26,TRUE
+"msg56",,,,8,"sc/ui.sc","emoji_happy",,0,
+

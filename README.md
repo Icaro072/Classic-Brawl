@@ -1,16 +1,15 @@
 <h1 align="center">Welcome to Classic-Brawl 👋</h1>
 
-Open source Brawl Stars server emulator for version 26 of the game!
+Open source Brawl Stars server emulator for version 29 of the game!
 
 
-![ScreenShot](https://cdn.discordapp.com/attachments/704364452891590778/789482341209866280/Screenshot_20201218-151815_Brawl_Client.jpg) 
+![ScreenShot](https://cdn.discordapp.com/attachments/773634174645043242/842464937049456670/Screenshot_20210513-151435.png) 
 
 
 ## What's working ?
 - Battles
   - Trophies in offline battles
 - Home
-  - Unlimited resources
   - Brawlers from boxes  
   - All skins unlocked
   - Gadgets and Star Powers
@@ -31,8 +30,6 @@ Open source Brawl Stars server emulator for version 26 of the game!
 ## Prerequisites
 
 - python 3.7
-
-
 
 
 ## Run Server
@@ -56,9 +53,7 @@ Open source Brawl Stars server emulator for version 26 of the game!
 
 
 ## Configure client
-To connect to your server, you need a custom client. Here the only solution is to use a [pre-made client](https://mega.nz/file/vSIDFKaT#pDdGFkevXwp_3LP1wW1wtj23Gj2aADZwzfXAAI8JEs8). Just replace the IP in the frida-gadget config with yours (```/lib/armeabi-v7a/libgg.config.so```) ```{"interaction":{"interaction":{"type":"script","path":"libscript.so","on_change":"reload","parameters":{"redirectHost":"YOUR_IP","relocate":true}}}```
-
-
+Client:https://www.mediafire.com/file/qortsa0b0yfyu0i/BrawlStars-v29.apk/file
 
 
 

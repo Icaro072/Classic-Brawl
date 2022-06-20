@@ -14,9 +14,7 @@ class BattleTestMessage(Writer):
         self.writeInt(0) # timer
         self.writeInt(1)  # Current player
         self.writeInt(self.player.mmplayers) # Max player
-
-        self.writeInt(1)  # Unknown
-        self.writeString("Player")
-        self.writeVint(10)
+        self.writeInt(0)  # Unknown
+        self.writeBoolean(False)
 
         

@@ -17,7 +17,7 @@ class LogicBoxDataCommand(Writer):
         self.BoxData = Boxes.boxes
 
     def encode(self):
-        reward_list = ["Nothing", "Brawler", "Tickets", "Gems", "TokensDoubler"]
+        reward_list = ["Nothing", "Brawler", "Gems", "TokensDoubler"]
         unlocked_brawlers = []
         unlockable_brawlers = []
 
@@ -43,12 +43,19 @@ class LogicBoxDataCommand(Writer):
                 DataBase.replaceValue(self, 'gems', self.player.gems - 30)
                 return 12
             elif id == 6:  # Trophy Road Brawl Box
-                DataBase.replaceValue(self, 'leagueReward', self.player.trophyroad + 1)
                 return 10
+            elif id == 7:  # Trophy Road Brawl Box
+                return 12
+            elif id == 8:  # Trophy Road Brawl Box
+                return 11
+            elif id == 9:  # Brawl Pass Brawl Box
+                return 10
+            elif id == 10:  # Brawl Pass Big Box
+                return 12
 
         self.box_skin_id = get_id(self.player.box_id)
         box_content = {"RewardType": "", "RewardCount": 1, "Gold": randint(self.BoxData[self.box_index]["Coins"][0], self.BoxData[self.box_index]["Coins"][1])}
-        reward = choices(reward_list, weights=[0.5, 0.18, 0.15, 0.09, 0.05], k=1)
+        reward = choices(reward_list, weights=[0.5, 0.18, 0.09, 0.05], k=1)
 
         if reward[0] == "Brawler" and len(unlockable_brawlers) == 0:
             reward_list.pop(1)
@@ -112,22 +119,24 @@ class LogicBoxDataCommand(Writer):
         if box_content["RewardType"] == "Brawler" and self.BoxData[self.box_index]["NewCharPosition"] == "Start":
             # Brawler start
             self.writeVint(1)                           # Reward amount
-            self.writeScId(16, box_content["Brawler"])  # CsvID
-            self.writeVint(1)                           # RewardID
-            self.writeVint(0)
-            self.writeVint(0)
-            self.writeVint(0)
+            self.writeScId(16, box_content["Brawler"])  # CsvID 16
+            self.writeVint(1) # Reward ID
+            self.writeVint(0) # CsvID 29
+            self.writeVint(0) # CsvID 52
+            self.writeVint(0) # CsvID 23
+            self.writeVint(0) 
             # Brawler end
 
         else:
             DataBase.replaceValue(self, 'gold', self.player.gold + box_content["Gold"])
             # Gold start
             self.writeVint(box_content["Gold"]) # Reward amount
-            self.writeVint(0) # SCID
-            self.writeVint(7) # RewardID
-            self.writeVint(0)
-            self.writeVint(0)
-            self.writeVint(0)
+            self.writeVint(0) # CsvID 16
+            self.writeVint(7) # Reward ID
+            self.writeVint(0) # CsvID 29
+            self.writeVint(0) # CsvID 52
+            self.writeVint(0) # CsvID 23
+            self.writeVint(0) # ????
             # Gold end
 
             powerpoints_ammount = [randint(self.BoxData[self.box_index]["UpgradePoints"][0], self.BoxData[self.box_index]["UpgradePoints"][1]) for _ in range(len(brawlers_rewarded))]
@@ -137,22 +146,24 @@ class LogicBoxDataCommand(Writer):
                 DataBase.replaceValue(self, 'brawlersUpgradePoints', self.player.brawlers_upgradium)
                 # Upgrade points start
                 self.writeVint(powerpoints_ammount[i]) # Reward amount
-                self.writeScId(16, box_content["Powerpoints" + str(i + 1)]) # BrawlerID
-                self.writeVint(6) # RewardID
-                self.writeVint(0)
-                self.writeVint(0)
-                self.writeVint(0)
+                self.writeScId(16, box_content["Powerpoints" + str(i + 1)]) # CsvID 16
+                self.writeVint(6) # Reward ID
+                self.writeVint(0) # CsvID 29
+                self.writeVint(0) # CsvID 52
+                self.writeVint(0) # CsvID 23
+                self.writeVint(0) 
                 # Upgrade points end
 
             if box_content["RewardType"] == "Brawler":
                 if self.BoxData[self.box_index]["NewCharPosition"] == "End" or self.BoxData[self.box_index]["NewCharPosition"] == "Middle":
                     # Brawler start
                     self.writeVint(1)  # Reward amount
-                    self.writeScId(16, box_content["Brawler"])  # CsvID
-                    self.writeVint(1)  # RewardID
-                    self.writeVint(0)
-                    self.writeVint(0)
-                    self.writeVint(0)
+                    self.writeScId(16, box_content["Brawler"])  # CsvID 16
+                    self.writeVint(1)  # Reward ID
+                    self.writeVint(0) # CsvID 29
+                    self.writeVint(0) # CsvID 52
+                    self.writeVint(0) # CsvID 23
+                    self.writeVint(0) 
                     # Brawler end
 
             if box_content["RewardType"] == "Bonus":
@@ -162,10 +173,6 @@ class LogicBoxDataCommand(Writer):
                             ammountrewarded = choice(box_content[reward[0]])
                             self.player.gems = self.player.gems + ammountrewarded
                             DataBase.replaceValue(self, 'gems', self.player.gems)
-                        elif reward[0] == "Tickets":
-                            ammountrewarded = choice(box_content[reward[0]])
-                            self.player.tickets = self.player.tickets + ammountrewarded
-                            DataBase.replaceValue(self, 'tickets', self.player.tickets)
                         else:
                             ammountrewarded = choice(box_content[reward[0]])
                             self.player.tokensdoubler = self.player.tokensdoubler + ammountrewarded

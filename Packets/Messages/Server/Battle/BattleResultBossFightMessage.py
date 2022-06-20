@@ -18,33 +18,37 @@ class BattleResultBossFightMessage(Writer):
         else:
             brawler_level = self.player.Brawler_level[str(self.player.brawler_id)] + 1
         # Rewards
-        exp_reward = [0]
-        token_list = [0]
-        mvp_exp_reward = [10]    
-        # Result Rewards
-        if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
-            result = 7
-        elif self.player.battle_tokens <= 0:
-            result = 5
-        elif self.player.collected_experience >= self.player.maximum_experience:
-            result = 3
+        if self.player.tutorial <= 1:
+            exp_reward = [0, 0, 0]
+            token_list = [0, 0, 0]
+            mvp_exp_reward = [0, 0]
         else:
-            result = 1
+            exp_reward = [8, 6, 4]
+            token_list = [20, 15, 10]
+            mvp_exp_reward = [10]
+        # Result Rewards
+        if self.player.battle_tokens <= 0 and self.player.collected_experience >= 1000:
+            result = 6
+        elif self.player.battle_tokens <= 0:
+            result = 4
+        elif self.player.collected_experience >= 1000:
+            result = 2
+        else:
+            result = 0
         if self.player.battle_result == 0:
             gainedtokens = token_list[0]
             gainedexperience = exp_reward[0]
-                
         if self.player.battle_result == 1:
-            gainedtokens = token_list[0]
-            gainedexperience = exp_reward[0]
+            gainedtokens = token_list[2]
+            gainedexperience = exp_reward[2]
         if self.player.battle_result == 2:
-            gainedtokens = token_list[0]
-            gainedexperience = exp_reward[0]
+            gainedtokens = token_list[1]
+            gainedexperience = exp_reward[1]
                 
         if 0 <= result <= 15:
             starplayer = 1
         else:
-            starplayer = 5
+            starplayer = 1
         # Star Player Info
         if starplayer == 5:
             starplayerexperience = mvp_exp_reward[0]
@@ -61,12 +65,9 @@ class BattleResultBossFightMessage(Writer):
         if result in [2, 3, 6, 7, 10, 11, 14, 15, 18, 19, 22, 23, 26, 27, 30, 31]:
             mvpexperience = 0
             experience = 0
-        if result in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]:
-            startoken = 1
-        if result in [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]:
-            startoken = 0
         if 0 <= result <= 31:
             trophies = 0
+            startoken = 0
         # DataBase Stuff            
         self.player.player_experience += experience + mvpexperience
         self.player.collected_experience += experience + mvpexperience
@@ -136,7 +137,7 @@ class BattleResultBossFightMessage(Writer):
             self.writeVint(32) # Battle Result Type
         else:
             self.writeVint(result) # Battle Result Type
-        self.writeVint(0) # Championship Challenge Type
+        self.writeVint(-64) # Championship Challenge Type
         self.writeVint(0) # Championship Cleared and Beta Quests
             
         # Players Array
@@ -146,11 +147,8 @@ class BattleResultBossFightMessage(Writer):
         self.writeScId(16, self.player.brawler_id) # Player Brawler
         self.writeScId(29, self.player.skin_id) # Player Skin
         self.writeVint(brawler_trophies) # Your Brawler Trophies
-        self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(brawler_level) # Your Brawler Power Level
-        else:
-            self.writeVint(10) # Your Brawler Power Level
+        self.writeVint(0) # Your Power Play Points
+        self.writeVint(brawler_level) # Your Brawler Power Level
         self.writeBoolean(True) # HighID and LowID Array
         self.writeInt(self.player.high_id) # HighID
         self.writeInt(self.player.low_id) # LowID
@@ -158,6 +156,7 @@ class BattleResultBossFightMessage(Writer):
         self.writeVint(self.player.player_experience -experience -mvpexperience) # Player Experience Level
         self.writeVint(28000000 + self.player.profile_icon) # Player Profile Icon
         self.writeVint(43000000 + self.player.name_color) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.team == 0:
             if self.player.bot1_team == 0:
@@ -172,16 +171,14 @@ class BattleResultBossFightMessage(Writer):
         self.writeScId(16, self.player.bot1) # Bot 1 Brawler
         self.writeVint(0) # Bot 1 Skin
         self.writeVint(0) # Brawler Trophies
-        self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(0) # Power Play Points
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot1_n) # Bot 1 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.team == 0:
             if self.player.bot2_team == 0:
@@ -196,16 +193,14 @@ class BattleResultBossFightMessage(Writer):
         self.writeScId(16, self.player.bot2) # Bot 2 Brawler
         self.writeVint(0) # Bot 2 Skin
         self.writeVint(0) # Brawler Trophies
-        self.writeVint(0) # Unknown (Power Play Related)
-        if self.player.tutorial <= 1:
-            self.writeVint(1) # Brawler Power Level
-        else:
-            self.writeVint(10) # Brawler Power Level
+        self.writeVint(0) # Power Play Points
+        self.writeVint(1) # Brawler Power Level
         self.writeBoolean(False) # HighID and LowID Array
         self.writeString(self.player.bot2_n) # Bot 2 Name
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
         
         # Experience Array
         self.writeVint(2) # Count

@@ -66,3 +66,4 @@ class AllianceDataMessage(Writer):
             self.writeVint(self.plrexperience)
             self.writeVint(28000000 + self.plricon)
             self.writeVint(43000000 + self.plrnamecolor)
+            self.writeVint(0) # Unknown

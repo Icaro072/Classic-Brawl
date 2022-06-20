@@ -76,11 +76,11 @@ class BattleResultRoboWarsMessage(Writer):
                 lose_val = -24
         # Result Rewards
         if self.player.result == 0:
-            if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
+            if self.player.battle_tokens <= 0 and self.player.collected_experience >= 1000:
                 result = self.player.result + 6
             elif self.player.battle_tokens <= 0:
                 result = self.player.result + 4
-            elif self.player.collected_experience >= self.player.maximum_experience:
+            elif self.player.collected_experience >= 1000:
                 result = self.player.result + 2
             else:
                 result = self.player.result
@@ -98,11 +98,11 @@ class BattleResultRoboWarsMessage(Writer):
                 gainedexperience = practice_exp_reward[1]
         else:
             if self.player.battle_result == 0:
-                if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
+                if self.player.battle_tokens <= 0 and self.player.collected_experience >= 1000:
                     result = self.player.result + 7
                 elif self.player.battle_tokens <= 0:
                     result = self.player.result + 5
-                elif self.player.collected_experience >= self.player.maximum_experience:
+                elif self.player.collected_experience >= 1000:
                     result = self.player.result + 3
                 else:
                     result = self.player.result + 1
@@ -113,11 +113,11 @@ class BattleResultRoboWarsMessage(Writer):
                 DataBase.replaceValue(self, '3vs3Wins', self.player.ThreeVSThree_wins)
 
             if self.player.battle_result in [1, 2]:
-                if self.player.battle_tokens <= 0 and self.player.collected_experience >= self.player.maximum_experience:
+                if self.player.battle_tokens <= 0 and self.player.collected_experience >= 1000:
                     result = self.player.result + 6
                 elif self.player.battle_tokens <= 0:
                     result = self.player.result + 4
-                elif self.player.collected_experience >= self.player.maximum_experience:
+                elif self.player.collected_experience >= 1000:
                     result = self.player.result + 2
                 else:
                     result = self.player.result
@@ -259,6 +259,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(self.player.player_experience -experience -mvpexperience) # Player Experience Level
         self.writeVint(28000000 + self.player.profile_icon) # Player Profile Icon
         self.writeVint(43000000 + self.player.name_color) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.team == 0:
             if self.player.bot1_team == 0:
@@ -283,6 +284,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
             
         if self.player.team == 0:
             if self.player.bot2_team == 0:
@@ -307,6 +309,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.team == 0:
             if self.player.bot3_team == 0:
@@ -331,6 +334,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.team == 0:
             if self.player.bot4_team == 0:
@@ -355,6 +359,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
 
         if self.player.team == 0:
             if self.player.bot5_team == 0:
@@ -379,6 +384,7 @@ class BattleResultRoboWarsMessage(Writer):
         self.writeVint(0) # Player Experience Level
         self.writeVint(28000000) # Player Profile Icon
         self.writeVint(43000000) # Player Name Color
+        self.writeVint(0) # Unknown
         
         # Experience Array
         self.writeVint(2) # Count
